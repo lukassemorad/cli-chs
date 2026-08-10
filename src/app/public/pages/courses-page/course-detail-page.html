@@ -1,0 +1,83 @@
+@if (course(); as course) {
+  <div class="flex flex-col gap-6">
+    <a routerLink="/kurzy" class="text-sm text-muted-foreground hover:text-foreground">
+      ← Zpět na kurzy
+    </a>
+
+    <div class="flex flex-col gap-2">
+      <span hlmBadge class="w-fit">{{ categoryLabels[course.category] }}</span>
+      <h1 class="text-2xl font-semibold">{{ course.title }}</h1>
+      <p class="text-muted-foreground">{{ course.description }}</p>
+    </div>
+
+    <div hlmCard>
+      <div hlmCardHeader>
+        <h3 hlmCardTitle>Informace o kurzu</h3>
+      </div>
+      <div hlmCardContent>
+        <dl class="grid gap-3 sm:grid-cols-2">
+          <div class="flex items-center gap-2">
+            <ng-icon name="lucideCalendarDays" size="1rem" class="text-muted-foreground" />
+            <dt class="text-muted-foreground">Termín:</dt>
+            <dd>{{ course.dateStart | date: 'd. M. yyyy' }}</dd>
+          </div>
+          <div class="flex items-center gap-2">
+            <ng-icon name="lucideMapPin" size="1rem" class="text-muted-foreground" />
+            <dt class="text-muted-foreground">Místo:</dt>
+            <dd>{{ course.location }}</dd>
+          </div>
+          <div class="flex items-center gap-2">
+            <ng-icon name="lucideGraduationCap" size="1rem" class="text-muted-foreground" />
+            <dt class="text-muted-foreground">Lektor:</dt>
+            <dd>{{ course.instructor }}</dd>
+          </div>
+          <div class="flex items-center gap-2">
+            <ng-icon name="lucideUsers" size="1rem" class="text-muted-foreground" />
+            <dt class="text-muted-foreground">Volná místa:</dt>
+            <dd>{{ freeSpots() > 0 ? freeSpots() + ' z ' + course.capacityTotal : 'Obsazeno' }}</dd>
+          </div>
+          <div class="flex items-center gap-2">
+            <dt class="text-muted-foreground">Cena:</dt>
+            <dd class="font-semibold">{{ course.price }} Kč</dd>
+          </div>
+          <div class="flex items-center gap-2">
+            <dt class="text-muted-foreground">Uzávěrka přihlášek:</dt>
+            <dd>{{ course.registrationDeadline | date: 'd. M. yyyy' }}</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <div hlmCard>
+      <div hlmCardHeader>
+        <h3 hlmCardTitle>Podmínky přihlášení</h3>
+      </div>
+      <div hlmCardContent>
+        <ul class="flex flex-col gap-2 text-sm">
+          <li class="flex items-center gap-2">
+            <span hlmBadge [variant]="course.requiresMembership ? 'default' : 'secondary'">
+              {{ course.requiresMembership ? 'Vyžadováno' : 'Nevyžadováno' }}
+            </span>
+            Členství / registrace
+          </li>
+          <li class="flex items-center gap-2">
+            <span hlmBadge variant="secondary">{{ course.minAge }}+</span>
+            Minimální věk
+          </li>
+          <li class="flex items-center gap-2">
+            <span hlmBadge [variant]="course.requiredQualification ? 'default' : 'secondary'">
+              {{ course.requiredQualification ?? 'Není vyžadována' }}
+            </span>
+            Požadovaná kvalifikace
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="flex flex-col gap-4">
+    <h1 class="text-2xl font-semibold">Kurz nenalezen</h1>
+    <p class="text-muted-foreground">Zvolený kurz neexistuje nebo byl odstraněn.</p>
+    <a hlmBtn variant="outline" class="w-fit" routerLink="/kurzy">Zpět na kurzy</a>
+  </div>
+}

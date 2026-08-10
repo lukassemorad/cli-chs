@@ -1,0 +1,36 @@
+<div hlmSidebarHeader>
+  <a routerLink="/admin" class="flex items-center gap-2 overflow-hidden px-2 py-1">
+    <img
+      src="/logo.svg"
+      alt="Český horolezecký svaz"
+      class="hidden size-9 shrink-0 dark:brightness-0 dark:invert group-data-[collapsible=icon]:block"
+    />
+    <img
+      src="/logo-full.svg"
+      alt="Český horolezecký svaz"
+      class="h-8 w-auto dark:brightness-0 dark:invert group-data-[collapsible=icon]:hidden"
+    />
+  </a>
+</div>
+
+<div hlmSidebarContent>
+  <div hlmSidebarGroup>
+    <div hlmSidebarGroupLabel>Navigace</div>
+    <ul hlmSidebarMenu>
+      @for (item of navItems; track item.path) {
+        <li hlmSidebarMenuItem>
+          <a
+            hlmSidebarMenuButton
+            [routerLink]="item.path"
+            routerLinkActive
+            #rla="routerLinkActive"
+            [isActive]="rla.isActive"
+          >
+            <ng-icon [name]="item.icon" />
+            <span>{{ item.label }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</div>

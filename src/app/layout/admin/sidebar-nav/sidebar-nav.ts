@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
-import { HlmBadge } from '@spartan-ng/helm/badge';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   HlmSidebarContent,
-  HlmSidebarFooter,
   HlmSidebarGroup,
   HlmSidebarGroupLabel,
   HlmSidebarHeader,
@@ -13,7 +12,7 @@ import {
 } from '@spartan-ng/helm/sidebar';
 
 interface NavItem {
-  key: string;
+  path: string;
   label: string;
   icon: string;
 }
@@ -21,11 +20,11 @@ interface NavItem {
 @Component({
   selector: 'app-sidebar-nav',
   imports: [
-    HlmBadge,
     NgIcon,
+    RouterLink,
+    RouterLinkActive,
     HlmSidebarHeader,
     HlmSidebarContent,
-    HlmSidebarFooter,
     HlmSidebarGroup,
     HlmSidebarGroupLabel,
     HlmSidebarMenu,
@@ -41,11 +40,9 @@ interface NavItem {
 })
 export class SidebarNav {
   protected readonly navItems: NavItem[] = [
-    { key: 'overview', label: 'Přehled', icon: 'lucideHouse' },
-    { key: 'projects', label: 'Projekty', icon: 'lucideFolderKanban' },
-    { key: 'forms', label: 'Formuláře', icon: 'lucideClipboardList' },
-    { key: 'settings', label: 'Nastavení', icon: 'lucideSettings' },
+    { path: 'overview', label: 'Přehled', icon: 'lucideHouse' },
+    { path: 'projects', label: 'Projekty', icon: 'lucideFolderKanban' },
+    { path: 'forms', label: 'Formuláře', icon: 'lucideClipboardList' },
+    { path: 'settings', label: 'Nastavení', icon: 'lucideSettings' },
   ];
-
-  public readonly activeKey = model(this.navItems[0].key);
 }

@@ -1,0 +1,43 @@
+<header class="flex h-16 items-stretch justify-between border-b border-border pl-6">
+  <div class="flex items-center gap-6">
+    <a routerLink="/" class="flex items-center">
+      <img src="/logo-full.svg" alt="Český horolezecký svaz" class="h-8 w-auto dark:brightness-0 dark:invert" />
+    </a>
+
+    <nav class="flex h-full items-stretch">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          class="group relative flex items-center px-6 text-sm font-medium transition-colors"
+          [class.text-primary-foreground]="rla.isActive"
+          [class.text-muted-foreground]="!rla.isActive"
+        >
+          <span
+            class="absolute inset-0 -z-10 bg-accent opacity-0 transition-opacity [clip-path:polygon(22px_0,100%_0,calc(100%_-_22px)_100%,0_100%)] group-hover:opacity-100"
+          ></span>
+          <span
+            class="absolute inset-0 -z-10 bg-primary opacity-0 transition-opacity [clip-path:polygon(22px_0,100%_0,calc(100%_-_22px)_100%,0_100%)]"
+            [class.opacity-100]="rla.isActive"
+          ></span>
+          <span class="relative">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </div>
+
+  <div class="flex items-stretch">
+    <button hlmBtn variant="ghost" size="icon" class="my-auto mr-2" (click)="theme.toggle()">
+      <ng-icon [name]="theme.isDark() ? 'lucideSun' : 'lucideMoon'" />
+      <span class="sr-only">Přepnout tmavý režim</span>
+    </button>
+    <a
+      routerLink="/admin"
+      class="flex items-center bg-muted px-9 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground [clip-path:polygon(30px_0,100%_0,100%_100%,0_100%)]"
+    >
+      Administrace
+    </a>
+  </div>
+</header>
