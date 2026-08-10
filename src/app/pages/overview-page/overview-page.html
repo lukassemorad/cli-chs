@@ -1,0 +1,45 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col items-start gap-4">
+    <span hlmBadge>Nové</span>
+    <h1 class="text-3xl font-bold tracking-tight">Angular + Tailwind + spartan.ng</h1>
+    <p class="max-w-xl text-muted-foreground">
+      Testovací landing page pro seznámení se spartan.ng design systémem — headless komponenty
+      stylované Tailwindem, generované přímo do projektu.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <button hlmBtn size="lg">Začít</button>
+      <button hlmBtn variant="outline" size="lg">Dokumentace</button>
+    </div>
+  </div>
+
+  <div hlmTabs tab="summary">
+    <nav hlmTabsList>
+      <button hlmTabsTrigger="summary">Souhrn</button>
+      <button hlmTabsTrigger="activity">Aktivita</button>
+    </nav>
+
+    <div hlmTabsContent="summary" class="grid gap-4 pt-4 sm:grid-cols-3">
+      @for (feature of features; track feature.title) {
+        <div hlmCard>
+          <div hlmCardHeader>
+            <h3 hlmCardTitle>{{ feature.title }}</h3>
+          </div>
+          <div hlmCardContent>
+            <p hlmCardDescription>{{ feature.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div hlmTabsContent="activity" class="pt-4">
+      <div hlmCard>
+        <div hlmCardHeader>
+          <h3 hlmCardTitle>Zatím žádná aktivita</h3>
+        </div>
+        <div hlmCardContent>
+          <p hlmCardDescription>Tady by časem přibyl log posledních akcí.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

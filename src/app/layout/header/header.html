@@ -1,0 +1,7 @@
+<header class="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
+  <button hlmSidebarTrigger></button>
+  <button hlmBtn variant="ghost" size="icon" (click)="theme.toggle()">
+    <ng-icon [name]="theme.isDark() ? 'lucideSun' : 'lucideMoon'" />
+    <span class="sr-only">Přepnout tmavý režim</span>
+  </button>
+</header>

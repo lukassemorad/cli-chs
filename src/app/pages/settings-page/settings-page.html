@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-6">
+  <div hlmCard>
+    <div hlmCardHeader>
+      <h3 hlmCardTitle>Nastavení</h3>
+    </div>
+    <div hlmCardContent>
+      <p hlmCardDescription>Zatím žádná nastavení — placeholder stránka.</p>
+    </div>
+  </div>
+
+  <div hlmCard>
+    <div hlmCardHeader>
+      <h3 hlmCardTitle>Připomenutí</h3>
+    </div>
+    <div hlmCardContent class="flex flex-col items-start gap-3">
+      <p hlmCardDescription>Vlastní komponenta poskládaná z popover + calendar + čas.</p>
+      <hlm-date-time-picker [(value)]="reminderAt" placeholder="Vyber datum a čas" />
+      @if (reminderAt(); as date) {
+        <p class="text-sm text-muted-foreground">Vybráno: {{ date }}</p>
+      }
+    </div>
+  </div>
+</div>
