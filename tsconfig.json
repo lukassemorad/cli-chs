@@ -27,7 +27,11 @@
       "@spartan-ng/helm/calendar": ["./libs/ui/calendar/src/index.ts"],
       "@spartan-ng/helm/select": ["./libs/ui/select/src/index.ts"],
       "@spartan-ng/helm/popover": ["./libs/ui/popover/src/index.ts"],
-      "@spartan-ng/helm/date-time-picker": ["./libs/ui/date-time-picker/src/index.ts"]
+      "@spartan-ng/helm/date-time-picker": ["./libs/ui/date-time-picker/src/index.ts"],
+      "@spartan-ng/helm/dialog": ["./libs/ui/dialog/src/index.ts"],
+      "@spartan-ng/helm/textarea": ["./libs/ui/textarea/src/index.ts"],
+      "@spartan-ng/helm/field": ["./libs/ui/field/src/index.ts"],
+      "@spartan-ng/helm/label": ["./libs/ui/label/src/index.ts"]
     }
   },
   "angularCompilerOptions": {

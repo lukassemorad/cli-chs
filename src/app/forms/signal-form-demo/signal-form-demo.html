@@ -1,0 +1,87 @@
+<div hlmCard>
+  <div hlmCardHeader>
+    <h3 hlmCardTitle>Signal Forms</h3>
+    <p hlmCardDescription>@angular/forms/signals — form(signal), [formField], schema validace.</p>
+  </div>
+
+  <div hlmCardContent>
+    <form (submit)="onSubmit($event)">
+      <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="signal-category">Kategorie</label>
+          <hlm-select
+            [value]="$any(demoForm.category().value())"
+            (valueChange)="demoForm.category().value.set($any($event) ?? null); demoForm.category().markAsTouched()"
+          >
+            <hlm-select-trigger id="signal-category" class="w-full">
+              <hlm-select-value placeholder="Vyber kategorii" />
+            </hlm-select-trigger>
+            <hlm-select-content *hlmSelectPortal>
+              @for (option of categories; track option.value) {
+                <hlm-select-item [value]="$any(option.value)">{{ option.label }}</hlm-select-item>
+              }
+            </hlm-select-content>
+          </hlm-select>
+          @if (demoForm.category().touched() && demoForm.category().invalid()) {
+            <p class="text-sm text-destructive">{{ demoForm.category().errors()[0]?.message }}</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="signal-name">Jméno</label>
+          <input hlmInput id="signal-name" [formField]="demoForm.name" />
+          @if (demoForm.name().touched() && demoForm.name().invalid()) {
+            <p class="text-sm text-destructive">{{ demoForm.name().errors()[0]?.message }}</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="signal-password">Heslo</label>
+          <input hlmInput id="signal-password" type="password" [formField]="demoForm.password" />
+          @if (demoForm.password().touched() && demoForm.password().invalid()) {
+            <div class="flex flex-col text-sm text-destructive">
+              @for (err of demoForm.password().errors(); track err.kind) {
+                <span>{{ err.message }}</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="signal-message">Zpráva</label>
+          <textarea hlmTextarea id="signal-message" rows="4" [formField]="demoForm.message"></textarea>
+          @if (demoForm.message().touched() && demoForm.message().invalid()) {
+            <p class="text-sm text-destructive">{{ demoForm.message().errors()[0]?.message }}</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="signal-scheduled-at">Datum a čas</label>
+          <hlm-date-time-picker
+            id="signal-scheduled-at"
+            [value]="demoForm.scheduledAt().value() ?? undefined"
+            (valueChange)="demoForm.scheduledAt().value.set($event ?? null); demoForm.scheduledAt().markAsTouched()"
+          />
+          @if (demoForm.scheduledAt().touched() && demoForm.scheduledAt().invalid()) {
+            <p class="text-sm text-destructive">{{ demoForm.scheduledAt().errors()[0]?.message }}</p>
+          }
+        </div>
+
+        <button hlmBtn type="submit">Odeslat</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hlm-dialog>
+  <hlm-dialog-content *hlmDialogPortal>
+    <div hlmDialogHeader>
+      <h3 hlmDialogTitle>Formulář odeslán</h3>
+      <p hlmDialogDescription>Signal Forms verze</p>
+    </div>
+    <pre class="max-h-64 overflow-auto rounded-md bg-muted p-3 text-xs">{{ submittedJson() }}</pre>
+    <div hlmDialogFooter>
+      <button hlmBtn variant="outline" hlmDialogClose>Zavřít</button>
+    </div>
+  </hlm-dialog-content>
+</hlm-dialog>

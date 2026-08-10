@@ -43,6 +43,7 @@ export class SidebarNav {
   protected readonly navItems: NavItem[] = [
     { key: 'overview', label: 'Přehled', icon: 'lucideHouse' },
     { key: 'projects', label: 'Projekty', icon: 'lucideFolderKanban' },
+    { key: 'forms', label: 'Formuláře', icon: 'lucideClipboardList' },
     { key: 'settings', label: 'Nastavení', icon: 'lucideSettings' },
   ];
 

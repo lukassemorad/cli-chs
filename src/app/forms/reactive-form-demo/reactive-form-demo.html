@@ -1,0 +1,101 @@
+<div hlmCard>
+  <div hlmCardHeader>
+    <h3 hlmCardTitle>Reactive Forms</h3>
+    <p hlmCardDescription>FormBuilder + FormGroup, [formGroup] / formControlName — klasika.</p>
+  </div>
+
+  <div hlmCardContent>
+    <form [formGroup]="demoForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="reactive-category">Kategorie</label>
+          <hlm-select
+            [value]="$any(demoForm.controls.category.value)"
+            (valueChange)="demoForm.controls.category.setValue($any($event) ?? null); demoForm.controls.category.markAsTouched()"
+          >
+            <hlm-select-trigger id="reactive-category" class="w-full">
+              <hlm-select-value placeholder="Vyber kategorii" />
+            </hlm-select-trigger>
+            <hlm-select-content *hlmSelectPortal>
+              @for (option of categories; track option.value) {
+                <hlm-select-item [value]="$any(option.value)">{{ option.label }}</hlm-select-item>
+              }
+            </hlm-select-content>
+          </hlm-select>
+          @if (demoForm.controls.category.touched && demoForm.controls.category.invalid) {
+            <p class="text-sm text-destructive">Vyber kategorii</p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="reactive-name">Jméno</label>
+          <input hlmInput id="reactive-name" formControlName="name" />
+          @if (demoForm.controls.name.touched && demoForm.controls.name.invalid) {
+            <p class="text-sm text-destructive">
+              @if (demoForm.controls.name.hasError('required')) {
+                Zadej jméno
+              } @else if (demoForm.controls.name.hasError('minlength')) {
+                Jméno musí mít alespoň 2 znaky
+              }
+            </p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="reactive-password">Heslo</label>
+          <input hlmInput id="reactive-password" type="password" formControlName="password" />
+          @if (demoForm.controls.password.touched && demoForm.controls.password.invalid) {
+            <div class="flex flex-col text-sm text-destructive">
+              @if (demoForm.controls.password.hasError('required')) {
+                <span>Zadej heslo</span>
+              }
+              @if (demoForm.controls.password.hasError('minlength')) {
+                <span>Heslo musí mít alespoň 8 znaků</span>
+              }
+              @if (demoForm.controls.password.hasError('pattern')) {
+                <span>Heslo musí obsahovat alespoň jednu číslici</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="reactive-message">Zpráva</label>
+          <textarea hlmTextarea id="reactive-message" rows="4" formControlName="message"></textarea>
+          @if (demoForm.controls.message.touched && demoForm.controls.message.invalid) {
+            <p class="text-sm text-destructive">
+              @if (demoForm.controls.message.hasError('required')) {
+                Zadej zprávu
+              } @else if (demoForm.controls.message.hasError('maxlength')) {
+                Zpráva může mít nejvýše 500 znaků
+              }
+            </p>
+          }
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label hlmLabel for="reactive-scheduled-at">Datum a čas</label>
+          <hlm-date-time-picker id="reactive-scheduled-at" formControlName="scheduledAt" />
+          @if (demoForm.controls.scheduledAt.touched && demoForm.controls.scheduledAt.invalid) {
+            <p class="text-sm text-destructive">Vyber datum a čas</p>
+          }
+        </div>
+
+        <button hlmBtn type="submit">Odeslat</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<hlm-dialog>
+  <hlm-dialog-content *hlmDialogPortal>
+    <div hlmDialogHeader>
+      <h3 hlmDialogTitle>Formulář odeslán</h3>
+      <p hlmDialogDescription>Reactive Forms verze</p>
+    </div>
+    <pre class="max-h-64 overflow-auto rounded-md bg-muted p-3 text-xs">{{ submittedJson() }}</pre>
+    <div hlmDialogFooter>
+      <button hlmBtn variant="outline" hlmDialogClose>Zavřít</button>
+    </div>
+  </hlm-dialog-content>
+</hlm-dialog>

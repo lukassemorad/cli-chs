@@ -6,13 +6,16 @@
   <main hlmSidebarInset>
     <app-header />
 
-    <div class="mx-auto w-full max-w-4xl px-6 py-10">
+    <div class="mx-auto w-full max-w-6xl px-6 py-10">
       @switch (activeNavKey()) {
         @case ('overview') {
           <app-overview-page />
         }
         @case ('projects') {
           <app-projects-page />
+        }
+        @case ('forms') {
+          <app-forms-page />
         }
         @case ('settings') {
           <app-settings-page />

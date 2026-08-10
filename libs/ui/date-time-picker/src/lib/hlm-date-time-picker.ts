@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal, viewChild } from '@angular/core';
+import { type ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideCalendarClock } from '@ng-icons/lucide';
 import { BrnPopover } from '@spartan-ng/brain/popover';
@@ -8,10 +9,16 @@ import { HlmCalendar } from '@spartan-ng/helm/calendar';
 import { HlmPopoverImports } from '@spartan-ng/helm/popover';
 import { HlmTimeField } from './hlm-time-field';
 
+const HLM_DATE_TIME_PICKER_VALUE_ACCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => HlmDateTimePicker),
+  multi: true,
+};
+
 @Component({
   selector: 'hlm-date-time-picker',
   imports: [HlmPopoverImports, HlmCalendar, HlmButtonImports, HlmTimeField, NgIcon],
-  providers: [provideIcons({ lucideCalendarClock })],
+  providers: [provideIcons({ lucideCalendarClock }), HLM_DATE_TIME_PICKER_VALUE_ACCESSOR],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'inline-block', 'data-slot': 'date-time-picker' },
   template: `
@@ -47,8 +54,11 @@ import { HlmTimeField } from './hlm-time-field';
     </hlm-popover>
   `,
 })
-export class HlmDateTimePicker {
+export class HlmDateTimePicker implements ControlValueAccessor {
   public readonly popover = viewChild.required(BrnPopover);
+
+  private _onChange?: (value: Date | null) => void;
+  private _onTouched?: () => void;
 
   public readonly value = model<Date | undefined>(undefined);
   public readonly placeholder = input('Vyber datum a čas');
@@ -81,15 +91,30 @@ export class HlmDateTimePicker {
 
   protected _onStateChange(state: BrnOverlayState): void {
     this._popoverState.set(state);
+    if (state === 'closed') this._onTouched?.();
+  }
+
+  public writeValue(value: Date | null): void {
+    this.value.set(value ?? undefined);
+  }
+
+  public registerOnChange(fn: (value: Date | null) => void): void {
+    this._onChange = fn;
+  }
+
+  public registerOnTouched(fn: () => void): void {
+    this._onTouched = fn;
   }
 
   private applyChange(date: Date | undefined, hours: number, minutes: number): void {
     if (!date) {
       this.value.set(undefined);
+      this._onChange?.(null);
       return;
     }
     const merged = new Date(date);
     merged.setHours(hours, minutes, 0, 0);
     this.value.set(merged);
+    this._onChange?.(merged);
   }
 }
