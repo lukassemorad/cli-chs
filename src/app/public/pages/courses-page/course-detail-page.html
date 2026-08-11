@@ -48,36 +48,19 @@
       </div>
     </div>
 
-    <div hlmCard>
-      <div hlmCardHeader>
-        <h3 hlmCardTitle>Podmínky přihlášení</h3>
+    <app-course-requirements-card [course]="course" />
+
+    @if (isEnrolled()) {
+      <div hlmCard>
+        <div hlmCardContent class="flex items-center gap-2">
+          <ng-icon name="lucideCircleCheck" size="1rem" class="text-primary" />
+          <span>Na tento kurz jste již přihlášeni.</span>
+        </div>
       </div>
-      <div hlmCardContent>
-        <ul class="flex flex-col gap-2 text-sm">
-          <li class="flex items-center gap-2">
-            <span hlmBadge [variant]="course.requiresMembership ? 'default' : 'secondary'">
-              {{ course.requiresMembership ? 'Vyžadováno' : 'Nevyžadováno' }}
-            </span>
-            Členství / registrace
-          </li>
-          <li class="flex items-center gap-2">
-            <span hlmBadge variant="secondary">{{ course.minAge }}+</span>
-            Minimální věk
-          </li>
-          <li class="flex items-center gap-2">
-            <span hlmBadge [variant]="course.requiredQualification ? 'default' : 'secondary'">
-              {{ course.requiredQualification ?? 'Není vyžadována' }}
-            </span>
-            Požadovaná kvalifikace
-          </li>
-        </ul>
-      </div>
-    </div>
+    } @else {
+      <button hlmBtn class="w-fit" (click)="onEnroll()">Přihlásit se na kurz</button>
+    }
   </div>
 } @else {
-  <div class="flex flex-col gap-4">
-    <h1 class="text-2xl font-semibold">Kurz nenalezen</h1>
-    <p class="text-muted-foreground">Zvolený kurz neexistuje nebo byl odstraněn.</p>
-    <a hlmBtn variant="outline" class="w-fit" routerLink="/kurzy">Zpět na kurzy</a>
-  </div>
+  <app-course-not-found />
 }

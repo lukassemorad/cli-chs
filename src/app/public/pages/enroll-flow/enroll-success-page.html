@@ -1,0 +1,18 @@
+@if (course(); as course) {
+  <div class="mx-auto flex max-w-lg flex-col gap-6">
+    <div hlmCard>
+      <div hlmCardHeader class="items-center text-center">
+        <ng-icon name="lucideCircleCheck" size="2.5rem" class="text-primary" />
+        <h3 hlmCardTitle>Úspěšně zaplaceno</h3>
+        <p hlmCardDescription>
+          Jste přihlášeni na kurz <strong>{{ course.title }}</strong> ({{ course.dateStart | date: 'd. M. yyyy' }}).
+        </p>
+      </div>
+      <div hlmCardContent class="flex justify-center">
+        <a hlmBtn routerLink="/moje-kurzy">Přejít na Mé kurzy</a>
+      </div>
+    </div>
+  </div>
+} @else {
+  <app-course-not-found />
+}

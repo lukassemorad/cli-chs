@@ -1,2 +1,48 @@
-<h1 class="text-2xl font-semibold">Domů</h1>
-<p class="mt-2 text-muted-foreground">Obsah veřejné úvodní stránky bude doplněn.</p>
+<div class="flex flex-col gap-10">
+  <div class="flex flex-col gap-4">
+    <span hlmBadge class="w-fit">Český horolezecký svaz</span>
+    <h1 class="text-2xl font-semibold">
+      Spojujeme lezce, horolezce a skialpinisty po celé České republice
+    </h1>
+    <p class="max-w-2xl text-muted-foreground">
+      Od roku 1990 podporujeme sportovní lezení, horolezectví i skialpinismus — pořádáme kurzy a
+      zkoušky, pečujeme o lezecké oblasti a pomáháme oddílům vychovávat další generaci horolezců.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a hlmBtn routerLink="/kurzy">Prohlédnout kurzy</a>
+      <a hlmBtn variant="outline" routerLink="/o-nas">Více o svazu</a>
+    </div>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-3">
+    @for (stat of stats; track stat.label) {
+      <div hlmCard>
+        <div hlmCardContent class="flex flex-col items-center gap-1 py-6 text-center">
+          <ng-icon [name]="stat.icon" size="1.5rem" class="text-primary" />
+          <span class="text-2xl font-semibold">{{ stat.value }}</span>
+          <span class="text-sm text-muted-foreground">{{ stat.label }}</span>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-semibold">Co u nás najdete</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      @for (link of quickLinks; track link.title) {
+        <div hlmCard class="flex flex-col">
+          <div hlmCardHeader>
+            <ng-icon [name]="link.icon" size="1.25rem" class="text-primary" />
+            <h3 hlmCardTitle>{{ link.title }}</h3>
+          </div>
+          <div hlmCardContent class="flex flex-1 flex-col gap-3">
+            <p hlmCardDescription>{{ link.description }}</p>
+            <a hlmBtn variant="outline" size="sm" class="mt-auto w-fit" [routerLink]="link.routerLink">
+              {{ link.linkLabel }} →
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

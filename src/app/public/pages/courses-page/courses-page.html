@@ -39,6 +39,16 @@
             hlmCard
             class="relative flex h-full flex-col rounded-none ring-0 [clip-path:polygon(0_0,calc(100%_-_28px)_0,100%_28px,100%_100%,0_100%)]"
           >
+            @if (enrollmentService.isEnrolled(course.id)) {
+              <div class="pointer-events-none absolute right-0 top-0 z-10 h-20 w-20 overflow-hidden">
+                <span
+                  class="absolute right-[-34px] top-[16px] block w-[140px] rotate-45 bg-primary py-1 text-center text-[11px] font-semibold tracking-wide text-primary-foreground shadow-sm"
+                >
+                  Přihlášeno
+                </span>
+              </div>
+            }
+
             <svg
               class="pointer-events-none absolute -bottom-8 right-4 -z-10 h-36 w-48 origin-bottom text-primary/[0.12] transition-transform duration-500 ease-out group-hover:-translate-y-2 group-hover:scale-110 dark:text-primary/[0.18]"
               viewBox="0 0 267.73 187.06"

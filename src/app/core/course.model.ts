@@ -22,3 +22,7 @@ export const COURSE_CATEGORY_LABELS: Record<CourseCategory, string> = {
   seminar: 'Seminář',
   zkouska: 'Zkouška',
 };
+
+export function freeSpots(course: Course): number {
+  return course.capacityTotal - course.capacityRegistered;
+}

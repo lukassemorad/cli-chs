@@ -1,0 +1,25 @@
+@if (course(); as course) {
+  <div class="mx-auto flex max-w-lg flex-col gap-6">
+    <a [routerLink]="['/kurzy', course.id]" class="text-sm text-muted-foreground hover:text-foreground">
+      ← Zpět na detail kurzu
+    </a>
+
+    <div class="flex flex-col gap-2">
+      <h1 class="text-2xl font-semibold">Přihlášení na kurz</h1>
+      <p class="text-muted-foreground">{{ course.title }}</p>
+    </div>
+
+    <app-course-requirements-card [course]="course" />
+
+    <label class="flex items-center gap-2 text-sm">
+      <input type="checkbox" [checked]="accepted()" (change)="accepted.set($any($event.target).checked)" />
+      Souhlasím s podmínkami přihlášení
+    </label>
+
+    <button hlmBtn class="w-fit" [disabled]="!accepted()" (click)="onContinue()">
+      Pokračovat k platbě
+    </button>
+  </div>
+} @else {
+  <app-course-not-found />
+}

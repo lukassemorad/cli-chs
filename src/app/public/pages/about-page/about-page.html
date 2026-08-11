@@ -1,2 +1,36 @@
-<h1 class="text-2xl font-semibold">O nás</h1>
-<p class="mt-2 text-muted-foreground">Obsah stránky O nás bude doplněn.</p>
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-2">
+    <h1 class="text-2xl font-semibold">O nás</h1>
+    <p class="text-muted-foreground">Kdo jsme a čemu se věnujeme.</p>
+  </div>
+
+  <div class="flex flex-col gap-4 text-sm text-muted-foreground">
+    <p>
+      Český horolezecký svaz sdružuje lezce, horolezce a skialpinisty z celé republiky.
+      Zastupujeme zájmy členů, staráme se o bezpečný a udržitelný přístup do lezeckých oblastí a
+      vytváříme podmínky pro rozvoj sportovního lezení i klasického horolezectví.
+    </p>
+    <p>
+      Naším cílem je předávat zkušenosti mezi generacemi — od začátečníků na první lezecké stěně
+      až po zkušené instruktory a horské vůdce. Proto klademe velký důraz na vzdělávání, metodiku
+      a bezpečnost.
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-semibold">Čemu se věnujeme</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      @for (area of focusAreas; track area.title) {
+        <div hlmCard>
+          <div hlmCardHeader>
+            <ng-icon [name]="area.icon" size="1.25rem" class="text-primary" />
+            <h3 hlmCardTitle>{{ area.title }}</h3>
+          </div>
+          <div hlmCardContent>
+            <p hlmCardDescription>{{ area.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

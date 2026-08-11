@@ -1,2 +1,25 @@
-<h1 class="text-2xl font-semibold">Kontakt</h1>
-<p class="mt-2 text-muted-foreground">Obsah kontaktní stránky bude doplněn.</p>
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-2">
+    <h1 class="text-2xl font-semibold">Kontakt</h1>
+    <p class="text-muted-foreground">Sekretariát Českého horolezeckého svazu.</p>
+  </div>
+
+  <div hlmCard class="max-w-md">
+    <div hlmCardHeader>
+      <h3 hlmCardTitle>Kontaktní údaje</h3>
+    </div>
+    <div hlmCardContent>
+      <dl class="flex flex-col gap-4">
+        @for (item of contactItems; track item.label) {
+          <div class="flex items-start gap-3">
+            <ng-icon [name]="item.icon" size="1.125rem" class="mt-0.5 text-primary" />
+            <div class="flex flex-col">
+              <dt class="text-sm text-muted-foreground">{{ item.label }}</dt>
+              <dd class="font-medium">{{ item.value }}</dd>
+            </div>
+          </div>
+        }
+      </dl>
+    </div>
+  </div>
+</div>

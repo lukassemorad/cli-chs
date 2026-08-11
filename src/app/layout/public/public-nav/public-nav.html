@@ -4,7 +4,7 @@
       <img src="/logo-full.svg" alt="Český horolezecký svaz" class="h-8 w-auto dark:brightness-0 dark:invert" />
     </a>
 
-    <nav class="flex h-full items-stretch">
+    <nav class="hidden h-full items-stretch lg:flex">
       @for (item of navItems; track item.path) {
         <a
           [routerLink]="item.path"
@@ -33,11 +33,104 @@
       <ng-icon [name]="theme.isDark() ? 'lucideSun' : 'lucideMoon'" />
       <span class="sr-only">Přepnout tmavý režim</span>
     </button>
+    @if (auth.user(); as user) {
+      <span class="my-auto hidden items-center gap-2 px-2 text-sm text-muted-foreground lg:flex">
+        <ng-icon name="lucideUserRound" size="1rem" />
+        {{ user.name }}
+      </span>
+      <button
+        hlmBtn
+        variant="ghost"
+        size="sm"
+        class="my-auto mr-2 hidden items-center gap-2 lg:flex"
+        (click)="auth.logout()"
+      >
+        <ng-icon name="lucideLogOut" size="1rem" />
+        Odhlásit se
+      </button>
+    } @else {
+      <a
+        routerLink="/prihlaseni"
+        hlmBtn
+        variant="ghost"
+        size="sm"
+        class="my-auto mr-2 hidden items-center gap-2 lg:flex"
+      >
+        <ng-icon name="lucideLogIn" size="1rem" />
+        Přihlásit se
+      </a>
+    }
     <a
       routerLink="/admin"
-      class="flex items-center bg-muted px-9 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground [clip-path:polygon(30px_0,100%_0,100%_100%,0_100%)]"
+      class="my-auto mr-2 hidden items-center gap-1.5 rounded-md px-3 py-1.5 text-xs text-muted-foreground/70 transition-colors hover:bg-accent hover:text-foreground lg:flex"
     >
+      <ng-icon name="lucideSettings" size="0.9rem" />
       Administrace
     </a>
+
+    <hlm-sheet #mobileMenu="hlmSheet" side="right" class="flex items-center">
+      <button hlmBtn variant="ghost" size="icon" class="mr-2 lg:hidden" hlmSheetTrigger>
+        <ng-icon name="lucideMenu" />
+        <span class="sr-only">Otevřít menu</span>
+      </button>
+
+      <ng-template hlmSheetPortal>
+        <hlm-sheet-content class="flex flex-col gap-1 p-6">
+          <hlm-sheet-header>
+            <h2 hlmSheetTitle>Menu</h2>
+          </hlm-sheet-header>
+
+          @for (item of navItems; track item.path) {
+            <a
+              [routerLink]="item.path"
+              routerLinkActive
+              #rla="routerLinkActive"
+              [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+              (click)="mobileMenu.close()"
+              class="rounded-md px-3 py-2 text-sm font-medium transition-colors"
+              [class.bg-accent]="rla.isActive"
+              [class.text-muted-foreground]="!rla.isActive"
+            >
+              {{ item.label }}
+            </a>
+          }
+
+          <div class="mt-2 flex flex-col gap-1 border-t border-border pt-4">
+            @if (auth.user(); as user) {
+              <span class="flex items-center gap-2 px-3 py-1 text-sm text-muted-foreground">
+                <ng-icon name="lucideUserRound" size="1rem" />
+                {{ user.name }}
+              </span>
+              <button
+                hlmBtn
+                variant="ghost"
+                class="justify-start px-3"
+                (click)="auth.logout(); mobileMenu.close()"
+              >
+                <ng-icon name="lucideLogOut" />
+                Odhlásit se
+              </button>
+            } @else {
+              <a
+                routerLink="/prihlaseni"
+                (click)="mobileMenu.close()"
+                class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground"
+              >
+                <ng-icon name="lucideLogIn" size="1rem" />
+                Přihlásit se
+              </a>
+            }
+            <a
+              routerLink="/admin"
+              (click)="mobileMenu.close()"
+              class="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-muted-foreground/70"
+            >
+              <ng-icon name="lucideSettings" size="0.9rem" />
+              Administrace
+            </a>
+          </div>
+        </hlm-sheet-content>
+      </ng-template>
+    </hlm-sheet>
   </div>
 </header>
