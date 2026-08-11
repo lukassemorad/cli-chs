@@ -3,6 +3,9 @@ import { effect, Injectable, signal } from '@angular/core';
 export interface AuthUser {
   name: string;
   email: string;
+  isMember: boolean;
+  isAdult: boolean;
+  hasQualification: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +28,7 @@ export class AuthService {
   public login(email: string, _password: string): void {
     const namePart = email.split('@')[0] ?? email;
     const name = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-    this._user.set({ name, email });
+    this._user.set({ name, email, isMember: true, isAdult: true, hasQualification: false });
   }
 
   public logout(): void {

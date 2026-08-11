@@ -1,45 +1,41 @@
 <div class="flex flex-col gap-6">
-  <div class="flex flex-col items-start gap-4">
-    <span hlmBadge>Nové</span>
-    <h1 class="text-3xl font-bold tracking-tight">Angular + Tailwind + spartan.ng</h1>
-    <p class="max-w-xl text-muted-foreground">
-      Testovací landing page pro seznámení se spartan.ng design systémem — headless komponenty
-      stylované Tailwindem, generované přímo do projektu.
-    </p>
-    <div class="flex flex-wrap gap-3">
-      <button hlmBtn size="lg">Začít</button>
-      <button hlmBtn variant="outline" size="lg">Dokumentace</button>
-    </div>
+  <div class="flex flex-col gap-2">
+    <h1 class="text-2xl font-semibold">Přehled</h1>
+    <p class="text-muted-foreground">Souhrn aktuálního stavu kurzů.</p>
   </div>
 
-  <div hlmTabs tab="summary">
-    <nav hlmTabsList>
-      <button hlmTabsTrigger="summary">Souhrn</button>
-      <button hlmTabsTrigger="activity">Aktivita</button>
-    </nav>
-
-    <div hlmTabsContent="summary" class="grid gap-4 pt-4 sm:grid-cols-3">
-      @for (feature of features; track feature.title) {
-        <div hlmCard>
-          <div hlmCardHeader>
-            <h3 hlmCardTitle>{{ feature.title }}</h3>
-          </div>
-          <div hlmCardContent>
-            <p hlmCardDescription>{{ feature.description }}</p>
-          </div>
-        </div>
-      }
-    </div>
-
-    <div hlmTabsContent="activity" class="pt-4">
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    @for (kpi of kpiCards; track kpi.label) {
       <div hlmCard>
-        <div hlmCardHeader>
-          <h3 hlmCardTitle>Zatím žádná aktivita</h3>
-        </div>
-        <div hlmCardContent>
-          <p hlmCardDescription>Tady by časem přibyl log posledních akcí.</p>
+        <div hlmCardContent class="flex items-center gap-3 pt-6">
+          <ng-icon [name]="kpi.icon" size="1.25rem" class="text-muted-foreground" />
+          <div class="flex flex-col">
+            <span class="text-2xl font-semibold">{{ kpi.value }}</span>
+            <span class="text-sm text-muted-foreground">{{ kpi.label }}</span>
+          </div>
         </div>
       </div>
+    }
+  </div>
+
+  <div hlmCard>
+    <div hlmCardHeader>
+      <h3 hlmCardTitle>Nejbližší kurzy</h3>
+    </div>
+    <div hlmCardContent>
+      <ul class="flex flex-col gap-3">
+        @for (course of upcomingCourses; track course.id) {
+          <li class="flex items-center justify-between gap-3 border-b border-border pb-3 last:border-0 last:pb-0">
+            <div class="flex flex-col">
+              <span class="font-medium">{{ course.title }}</span>
+              <span class="text-sm text-muted-foreground">{{ course.dateStart | date: 'd. M. yyyy' }} · {{ course.location }}</span>
+            </div>
+            <a [routerLink]="['/admin/kurzy', course.id]" class="text-sm text-primary underline">
+              Detail
+            </a>
+          </li>
+        }
+      </ul>
     </div>
   </div>
 </div>

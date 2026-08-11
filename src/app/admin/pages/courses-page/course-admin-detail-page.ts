@@ -1,24 +1,20 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { NgIcon } from '@ng-icons/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HlmBadge } from '@spartan-ng/helm/badge';
 import { HlmButton } from '@spartan-ng/helm/button';
 import { HlmCardImports } from '@spartan-ng/helm/card';
-import { AuthService } from '../../../core/auth.service';
 import { COURSE_CATEGORY_LABELS, COURSE_STATUS_LABELS, freeSpots, statusFor } from '../../../core/course.model';
 import { CoursesService } from '../../../core/courses.service';
-import { EnrollmentService } from '../../../core/enrollment.service';
 import { CourseNotFound } from '../../../shared/course-not-found/course-not-found';
 import { CourseRequirementsCard } from '../../../shared/course-requirements-card/course-requirements-card';
 
 @Component({
-  selector: 'app-course-detail-page',
+  selector: 'app-course-admin-detail-page',
   imports: [
     RouterLink,
     DatePipe,
-    NgIcon,
     HlmBadge,
     HlmButton,
     ...HlmCardImports,
@@ -26,14 +22,11 @@ import { CourseRequirementsCard } from '../../../shared/course-requirements-card
     CourseRequirementsCard,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './course-detail-page.html',
+  templateUrl: './course-admin-detail-page.html',
 })
-export class CourseDetailPage {
+export class CourseAdminDetailPage {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  private readonly auth = inject(AuthService);
   private readonly coursesService = inject(CoursesService);
-  private readonly enrollmentService = inject(EnrollmentService);
 
   private readonly paramMap = toSignal(this.route.paramMap, {
     initialValue: this.route.snapshot.paramMap,
@@ -56,22 +49,8 @@ export class CourseDetailPage {
     return course ? statusFor(course) : null;
   });
 
-  protected readonly isEnrolled = computed(() => {
+  protected readonly enrolledUsers = computed(() => {
     const course = this.course();
-    return course ? this.enrollmentService.isEnrolled(course.id) : false;
+    return course ? this.coursesService.getEnrolledUsers(course) : [];
   });
-
-  protected onEnroll(): void {
-    const course = this.course();
-    if (!course) return;
-
-    if (!this.auth.user()) {
-      this.router.navigate(['/prihlaseni'], {
-        queryParams: { redirectTo: `/kurzy/${course.id}/prihlaseni` },
-      });
-      return;
-    }
-
-    this.router.navigate(['/kurzy', course.id, 'prihlaseni']);
-  }
 }

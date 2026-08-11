@@ -41,8 +41,7 @@ interface NavItem {
 export class SidebarNav {
   protected readonly navItems: NavItem[] = [
     { path: 'overview', label: 'Přehled', icon: 'lucideHouse' },
-    { path: 'projects', label: 'Projekty', icon: 'lucideFolderKanban' },
-    { path: 'forms', label: 'Formuláře', icon: 'lucideClipboardList' },
+    { path: 'kurzy', label: 'Kurzy', icon: 'lucideGraduationCap' },
     { path: 'settings', label: 'Nastavení', icon: 'lucideSettings' },
   ];
 }

@@ -4,9 +4,7 @@ import { provideIcons } from '@ng-icons/core';
 import {
   lucideCalendarDays,
   lucideCircleCheck,
-  lucideClipboardList,
   lucideClock,
-  lucideFolderKanban,
   lucideGraduationCap,
   lucideHouse,
   lucideLogIn,
@@ -35,11 +33,9 @@ export const appConfig: ApplicationConfig = {
     provideNativeDateAdapter(),
     provideIcons({
       lucideHouse,
-      lucideFolderKanban,
       lucideSettings,
       lucideSun,
       lucideMoon,
-      lucideClipboardList,
       lucideLogIn,
       lucideLogOut,
       lucideCalendarDays,

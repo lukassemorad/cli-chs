@@ -70,7 +70,12 @@
             </svg>
 
             <div hlmCardHeader>
-              <span hlmBadge class="w-fit">{{ categoryLabels[course.category] }}</span>
+              <div class="flex items-center gap-2">
+                <span hlmBadge class="w-fit">{{ categoryLabels[course.category] }}</span>
+                <span hlmBadge [variant]="statusFor(course) === 'open' ? 'default' : 'secondary'">
+                  {{ statusLabels[statusFor(course)] }}
+                </span>
+              </div>
               <h3 hlmCardTitle>{{ course.title }}</h3>
             </div>
             <div hlmCardContent class="flex flex-1 flex-col gap-3">

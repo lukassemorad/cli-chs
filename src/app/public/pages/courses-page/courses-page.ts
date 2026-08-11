@@ -7,7 +7,13 @@ import { HlmButton } from '@spartan-ng/helm/button';
 import { HlmCardImports } from '@spartan-ng/helm/card';
 import { HlmInput } from '@spartan-ng/helm/input';
 import { HlmSelectImports } from '@spartan-ng/helm/select';
-import { COURSE_CATEGORY_LABELS, CourseCategory, freeSpots } from '../../../core/course.model';
+import {
+  COURSE_CATEGORY_LABELS,
+  COURSE_STATUS_LABELS,
+  CourseCategory,
+  freeSpots,
+  statusFor,
+} from '../../../core/course.model';
 import { CoursesService } from '../../../core/courses.service';
 import { EnrollmentService } from '../../../core/enrollment.service';
 
@@ -58,4 +64,6 @@ export class CoursesPage {
   });
 
   protected readonly freeSpots = freeSpots;
+  protected readonly statusFor = statusFor;
+  protected readonly statusLabels = COURSE_STATUS_LABELS;
 }

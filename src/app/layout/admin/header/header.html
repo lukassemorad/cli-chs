@@ -8,8 +8,8 @@
       <ng-icon [name]="theme.isDark() ? 'lucideSun' : 'lucideMoon'" />
       <span class="sr-only">Přepnout tmavý režim</span>
     </button>
-    <a hlmBtn variant="ghost" size="icon" routerLink="/" aria-label="Zpět na web">
+    <button hlmBtn variant="ghost" size="icon" (click)="onLogout()" aria-label="Odhlásit se">
       <ng-icon name="lucideLogOut" />
-    </a>
+    </button>
   </div>
 </header>

@@ -1,0 +1,42 @@
+<div class="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6">
+  <a routerLink="/" class="text-sm text-muted-foreground hover:text-foreground">
+    ← Zpět na web
+  </a>
+
+  <div hlmCard>
+    <div hlmCardHeader>
+      <h3 hlmCardTitle>Přihlášení do administrace</h3>
+      <p hlmCardDescription>Demo přihlášení — stačí zadat libovolný e-mail a heslo.</p>
+    </div>
+
+    <div hlmCardContent>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col gap-5">
+          <div class="flex flex-col gap-1.5">
+            <label hlmLabel for="admin-login-email">E-mail</label>
+            <input hlmInput id="admin-login-email" type="email" formControlName="email" />
+            @if (loginForm.controls.email.touched && loginForm.controls.email.invalid) {
+              <p class="text-sm text-destructive">
+                @if (loginForm.controls.email.hasError('required')) {
+                  Zadejte e-mail
+                } @else if (loginForm.controls.email.hasError('email')) {
+                  Zadejte platný e-mail
+                }
+              </p>
+            }
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label hlmLabel for="admin-login-password">Heslo</label>
+            <input hlmInput id="admin-login-password" type="password" formControlName="password" />
+            @if (loginForm.controls.password.touched && loginForm.controls.password.invalid) {
+              <p class="text-sm text-destructive">Zadejte heslo</p>
+            }
+          </div>
+
+          <button hlmBtn type="submit">Přihlásit se</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
