@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HlmBadge } from '@spartan-ng/helm/badge';
@@ -7,8 +7,10 @@ import { HlmButton } from '@spartan-ng/helm/button';
 import { HlmCardImports } from '@spartan-ng/helm/card';
 import { COURSE_CATEGORY_LABELS, COURSE_STATUS_LABELS, freeSpots, statusFor } from '../../../core/course.model';
 import { CoursesService } from '../../../core/courses.service';
+import { EnrolledUser } from '../../../core/enrolled-user.model';
 import { CourseNotFound } from '../../../shared/course-not-found/course-not-found';
 import { CourseRequirementsCard } from '../../../shared/course-requirements-card/course-requirements-card';
+import { AppWindow } from '../../../shared/window/app-window';
 
 @Component({
   selector: 'app-course-admin-detail-page',
@@ -20,6 +22,7 @@ import { CourseRequirementsCard } from '../../../shared/course-requirements-card
     ...HlmCardImports,
     CourseNotFound,
     CourseRequirementsCard,
+    AppWindow,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './course-admin-detail-page.html',
@@ -53,4 +56,14 @@ export class CourseAdminDetailPage {
     const course = this.course();
     return course ? this.coursesService.getEnrolledUsers(course) : [];
   });
+
+  protected readonly selectedUser = signal<EnrolledUser | null>(null);
+
+  protected openUserDetail(user: EnrolledUser): void {
+    this.selectedUser.set(user);
+  }
+
+  protected closeUserDetail(): void {
+    this.selectedUser.set(null);
+  }
 }
